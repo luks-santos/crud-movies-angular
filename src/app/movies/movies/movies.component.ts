@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { Movie } from '../model/movie';
+import { MoviesService } from '../service/movies.service';
 
 @Component({
   selector: 'app-movies',
@@ -8,12 +11,11 @@ import { Movie } from '../model/movie';
 })
 export class MoviesComponent implements OnInit {
 
-  movies: Movie[] = [
-    {_id: 1, name: 'Film1', category: 'Cat1'}
-  ];
+  movies$: Observable<Movie[]>;
   displayedColumns = ['name', 'category']
 
-  constructor() {
+  constructor(private moviesService: MoviesService) {
+    this.movies$ = this.moviesService.findAll();
   }
 
   ngOnInit() {
