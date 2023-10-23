@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-        <mat-toolbar color="accent">Lista de Filmes</mat-toolbar>
+        <mat-toolbar color="primary">Lista de Filmes</mat-toolbar>
 
         <div *ngIf="movies$ | async as movies; else loading">
             <table mat-table [dataSource]="movies" class="mat-elevation-z8">

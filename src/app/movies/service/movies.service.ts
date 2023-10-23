@@ -9,7 +9,7 @@ import { Movie } from '../model/movie';
 })
 export class MoviesService {
 
-  private readonly API = '/assets/movies.json';
+  private readonly API = 'api/movies';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class MoviesService {
     return this.httpClient.get<Movie[]>(this.API)
     .pipe(
       first(),
-      delay(5000),
+      delay(0),
       tap(movies => console.log(movies))
     );
   }
