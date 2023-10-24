@@ -20,11 +20,17 @@
                     <mat-header-cell *matHeaderCellDef>
                         <button mat-mini-fab color="accent" aria-label="Adicionar Filme">
                             <mat-icon>add</mat-icon>
-                          </button>
+                        </button>
                     </mat-header-cell>
 
                     <mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" aria-label="Editar Filme">
+                            <mat-icon>edit</mat-icon>
+                        </button>
 
+                        <button mat-icon-button color="warn" aria-label="Remover Filme">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
     
