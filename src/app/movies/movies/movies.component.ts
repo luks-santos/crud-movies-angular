@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 import { Movie } from '../model/movie';
 import { MoviesService } from '../service/movies.service';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-movies',
@@ -18,13 +19,14 @@ export class MoviesComponent implements OnInit {
 
   constructor(
     private moviesService: MoviesService, 
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.movies$ = this.moviesService.findAll()
     .pipe(
       catchError(error => {
         this.onError('Error ao carregar filmes.')
-        
         return of([])
       })
     );
@@ -38,4 +40,10 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onAdd() {
+    // route utiliza a rota atual para acrescentar rota /new
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
+
 }
