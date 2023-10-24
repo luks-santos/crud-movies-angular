@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class MoviesComponent implements OnInit {
 
   movies$: Observable<Movie[]>;
-  displayedColumns = ['name', 'category']
+  displayedColumns = ['name', 'category', 'actions']
 
   constructor(
     private moviesService: MoviesService, 
