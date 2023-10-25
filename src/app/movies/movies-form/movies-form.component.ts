@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MoviesService } from '../service/movies.service';
+import { Observer } from 'rxjs';
+import { Movie } from '../model/movie';
 
 @Component({
   selector: 'app-movies-form',
@@ -30,8 +32,14 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {    
-    this.serviceMovie.save(this.form.value)
-    .subscribe(result => this.onSuccess(), error => this.onError());
+
+    const observer: Observer<Movie> = {
+      next: () => this.onSuccess(),
+      error: () => this.onError(),
+      complete: () => {}
+    };
+
+    this.serviceMovie.save(this.form.value).subscribe(observer);
   }
 
   onCancel() {
