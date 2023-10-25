@@ -1,10 +1,9 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MoviesService } from '../service/movies.service';
-import { Observer } from 'rxjs';
-import { Movie } from '../model/movie';
 
 @Component({
   selector: 'app-movies-form',
@@ -18,7 +17,8 @@ export class MoviesFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private serviceMovie: MoviesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
     ) { 
     this.form = this.formBuilder.group({
       name: [null],
@@ -37,12 +37,14 @@ export class MoviesFormComponent implements OnInit {
     {
       next: () => this.onSuccess(),
       error: () => this.onError(),
-      complete: () => {}
+      complete: () => {
+        this.onCancel()
+      }
     });
   }
 
   onCancel() {
-    console.log('cancelar');
+    this.location.back()
     
   }
 
