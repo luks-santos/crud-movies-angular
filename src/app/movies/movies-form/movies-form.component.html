@@ -10,12 +10,14 @@
                 <input matInput placeholder="Nome" formControlName="name">
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             </mat-form-field>
-            <br>
-            <mat-form-field class="full-width">
-                <mat-label>Insira a categoria</mat-label>
-                <input matInput placeholder="Categoria" formControlName="category">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
+            
+            
+            <section formGroupName="category">
+                <h4>Selecione categoria do filme:</h4>
+                <p><mat-checkbox formControlName="acao">Ação</mat-checkbox></p>
+                <p><mat-checkbox formControlName="fantasia">Fantasia</mat-checkbox></p>
+                <p><mat-checkbox formControlName="terror">Terror</mat-checkbox></p>
+              </section>
         </form>
     </mat-card-content>
 

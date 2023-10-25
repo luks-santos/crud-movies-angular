@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { MoviesService } from '../service/movies.service';
+import { Movie } from '../model/movie';
 @Component({
   selector: 'app-movies-form',
   templateUrl: './movies-form.component.html',
@@ -10,10 +12,18 @@ export class MoviesFormComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(
+    private formBuilder: FormBuilder,
+    private serviceMovie: MoviesService 
+    ) { 
     this.form = this.formBuilder.group({
       name: [null],
-      category: [null]
+      //crio um group para categoria
+      category: this.formBuilder.group({
+        acao: false,
+        fantasia: false,
+        terror: false
+      })
     });
   }
 
@@ -21,8 +31,12 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('salvar');
+    console.log(this.form.value);
     
+    this.serviceMovie.save(this.form.value).subscribe(request => {
+      console.log(request);
+      
+    })
   }
 
   onCancel() {

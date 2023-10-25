@@ -15,7 +15,7 @@ import { MoviesService } from '../service/movies.service';
 export class MoviesComponent implements OnInit {
 
   movies$: Observable<Movie[]>;
-  displayedColumns = ['name', 'category', 'actions']
+  displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions']
 
   constructor(
     private moviesService: MoviesService, 
@@ -45,5 +45,4 @@ export class MoviesComponent implements OnInit {
     // route utiliza a rota atual para acrescentar rota /new
     this.router.navigate(['new'], {relativeTo: this.route});
   }
-
 }

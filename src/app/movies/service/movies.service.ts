@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, first, Observable, tap } from 'rxjs';
+import { first, Observable, tap } from 'rxjs';
 
 import { Movie } from '../model/movie';
 
@@ -13,13 +13,15 @@ export class MoviesService {
 
   constructor(private httpClient: HttpClient) { }
 
-
   findAll(): Observable<Movie[]> {
     return this.httpClient.get<Movie[]>(this.API)
     .pipe(
       first(),
-      delay(0),
       tap(movies => console.log(movies))
     );
+  }
+
+  save(record: Movie): Observable<Movie> {
+    return this.httpClient.post<Movie>(this.API, record);
   }
 } 

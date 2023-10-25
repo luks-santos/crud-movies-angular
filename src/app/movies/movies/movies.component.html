@@ -10,9 +10,19 @@
                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
                 
-                <ng-container matColumnDef="category">
-                    <th mat-header-cell *matHeaderCellDef> Category </th>
-                    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                <ng-container matColumnDef="releaseDate">
+                    <th mat-header-cell *matHeaderCellDef> Ano de Lançamento </th>
+                    <td mat-cell *matCellDef="let element"> {{element.releaseDate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="movieDuration">
+                    <th mat-header-cell *matHeaderCellDef> Duração </th>
+                    <td mat-cell *matCellDef="let element"> {{element.movieDuration}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="movieClassification">
+                    <th mat-header-cell *matHeaderCellDef> Classificação </th>
+                    <td mat-cell *matCellDef="let element"> {{element.movieClassification}} </td>
                 </ng-container>
 
                 <!-- Actions Column -->
