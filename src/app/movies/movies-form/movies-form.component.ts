@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MoviesService } from '../service/movies.service';
-import { Movie } from '../model/movie';
+
 @Component({
   selector: 'app-movies-form',
   templateUrl: './movies-form.component.html',
@@ -14,7 +15,8 @@ export class MoviesFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private serviceMovie: MoviesService 
+    private serviceMovie: MoviesService,
+    private snackBar: MatSnackBar
     ) { 
     this.form = this.formBuilder.group({
       name: [null],
@@ -28,13 +30,20 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {    
-    this.serviceMovie.save(this.form.value).subscribe(request => {
-      console.log(request);
-    }) 
+    this.serviceMovie.save(this.form.value)
+    .subscribe(result => this.onSuccess(), error => this.onError());
   }
 
   onCancel() {
     console.log('cancelar');
     
+  }
+
+  private onSuccess() {
+    this.snackBar.open("Curso Salvo com Sucesso", '', { duration: 4000 });
+  }
+
+  private onError() {
+    this.snackBar.open("Error ao Salvar Filme", '', { duration: 6000 });
   }
 }
