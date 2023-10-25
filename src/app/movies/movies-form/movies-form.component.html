@@ -6,18 +6,34 @@
     <mat-card-content>
         <form [formGroup]="form">
             <mat-form-field class="full-width">
-                <mat-label>Insira o nome</mat-label>
-                <input matInput placeholder="Nome" formControlName="name">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Insira o nome" formControlName="name">
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Ano</mat-label>
+                <input matInput placeholder="Insira Apenas o ano: 1999, 2001" formControlName="releaseDate">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Duração</mat-label>
+                <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="movieDuration">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+
+            
+            <mat-form-field class="full-width">
+                <mat-label>Escolha uma classificação</mat-label>
+                <mat-select  formControlName="movieClassification">
+                    <mat-option value="RUIM">Ruim</mat-option>
+                    <mat-option value="BOM">Bom</mat-option>
+                    <mat-option value="EXCELENTE">Excelente</mat-option>
+                </mat-select>
             </mat-form-field>
             
             
-            <section formGroupName="category">
-                <h4>Selecione categoria do filme:</h4>
-                <p><mat-checkbox formControlName="acao">Ação</mat-checkbox></p>
-                <p><mat-checkbox formControlName="fantasia">Fantasia</mat-checkbox></p>
-                <p><mat-checkbox formControlName="terror">Terror</mat-checkbox></p>
-              </section>
         </form>
     </mat-card-content>
 

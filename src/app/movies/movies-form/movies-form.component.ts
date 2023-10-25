@@ -18,25 +18,19 @@ export class MoviesFormComponent implements OnInit {
     ) { 
     this.form = this.formBuilder.group({
       name: [null],
-      //crio um group para categoria
-      category: this.formBuilder.group({
-        acao: false,
-        fantasia: false,
-        terror: false
-      })
+      releaseDate: [null],
+      movieDuration: [null],
+      movieClassification: [null]
     });
   }
 
   ngOnInit() {
   }
 
-  onSubmit() {
-    console.log(this.form.value);
-    
+  onSubmit() {    
     this.serviceMovie.save(this.form.value).subscribe(request => {
       console.log(request);
-      
-    })
+    }) 
   }
 
   onCancel() {
