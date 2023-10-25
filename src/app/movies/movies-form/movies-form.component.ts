@@ -32,14 +32,13 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {    
-
-    const observer: Observer<Movie> = {
+    
+    this.serviceMovie.save(this.form.value).subscribe(
+    {
       next: () => this.onSuccess(),
       error: () => this.onError(),
       complete: () => {}
-    };
-
-    this.serviceMovie.save(this.form.value).subscribe(observer);
+    });
   }
 
   onCancel() {
