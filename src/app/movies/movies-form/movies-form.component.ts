@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,7 +10,7 @@ import { MoviesService } from '../service/movies.service';
   templateUrl: './movies-form.component.html',
   styleUrls: ['./movies-form.component.scss']
 })
-export class MoviesFormComponent implements OnInit {
+export class MoviesFormComponent {
 
   form = this.formBuilder.group({
     name: new FormControl('', {nonNullable: true}),
@@ -25,9 +25,6 @@ export class MoviesFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location
     ) { 
-  }
-
-  ngOnInit() {
   }
 
   onSubmit() {    

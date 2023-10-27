@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
@@ -12,7 +12,7 @@ import { MoviesService } from '../service/movies.service';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent {
 
   movies$: Observable<Movie[]>;
   
@@ -38,11 +38,8 @@ export class MoviesComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  onAdd() {
+    // route utiliza a rota atual para acrescentar rota /new
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
-
-  // onAdd() {
-  //   // route utiliza a rota atual para acrescentar rota /new
-  //   this.router.navigate(['new'], {relativeTo: this.route});
-  // }
 }

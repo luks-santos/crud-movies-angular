@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Movie } from '../model/movie';
 
@@ -11,18 +10,14 @@ import { Movie } from '../model/movie';
 export class MoviesListComponent {
   
   @Input() movies: Movie[] = [];
-
+  @Output() add = new EventEmitter();
+  
   readonly displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions'];
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-    ) {
-
+  constructor() {
   }
 
   onAdd() {
-    // route utiliza a rota atual para acrescentar rota /new
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.add.emit(true);
   }
 }
