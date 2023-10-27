@@ -7,11 +7,13 @@ import { SharedModule } from '../shared/shared.module';
 import { MoviesFormComponent } from './movies-form/movies-form.component';
 import { MoviesRoutingModule } from './movies-routing.module';
 import { MoviesComponent } from './movies/movies.component';
+import { MoviesListComponent } from './movies-list/movies-list.component';
 
 @NgModule({
   declarations: [
     MoviesComponent,
     MoviesFormComponent,
+    MoviesListComponent,
   ],
   imports: [
     CommonModule,

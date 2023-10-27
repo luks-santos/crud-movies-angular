@@ -15,7 +15,7 @@ import { MoviesService } from '../service/movies.service';
 export class MoviesComponent implements OnInit {
 
   movies$: Observable<Movie[]>;
-  displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions']
+  
 
   constructor(
     private moviesService: MoviesService, 
@@ -41,8 +41,8 @@ export class MoviesComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAdd() {
-    // route utiliza a rota atual para acrescentar rota /new
-    this.router.navigate(['new'], {relativeTo: this.route});
-  }
+  // onAdd() {
+  //   // route utiliza a rota atual para acrescentar rota /new
+  //   this.router.navigate(['new'], {relativeTo: this.route});
+  // }
 }
