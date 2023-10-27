@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MoviesService } from '../service/movies.service';
+import { MoviesService } from '../../service/movies.service';
 
 @Component({
   selector: 'app-movies-form',
@@ -41,7 +41,6 @@ export class MoviesFormComponent {
 
   onCancel() {
     this.location.back()
-    
   }
 
   private onSuccess() {

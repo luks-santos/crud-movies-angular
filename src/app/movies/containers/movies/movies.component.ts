@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
-import { Movie } from '../model/movie';
-import { MoviesService } from '../service/movies.service';
+import { Movie } from '../../model/movie';
+import { MoviesService } from '../../service/movies.service';
 
 @Component({
   selector: 'app-movies',
