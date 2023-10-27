@@ -1,7 +1,7 @@
 export interface Movie {
     _id: Number,
     name: String,
-    releaseDate: String,
+    releaseDate: Number,
 	movieDuration: String,
     movieClassification: String
 }

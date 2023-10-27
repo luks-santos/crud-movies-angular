@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MoviesService } from '../service/movies.service';
@@ -12,7 +12,12 @@ import { MoviesService } from '../service/movies.service';
 })
 export class MoviesFormComponent implements OnInit {
 
-  form: FormGroup;
+  form = this.formBuilder.group({
+    name: new FormControl('', {nonNullable: true}),
+    releaseDate: new FormControl(0, {nonNullable: true}),
+    movieDuration: new FormControl('', {nonNullable: true}),
+    movieClassification: new FormControl('', {nonNullable: true})
+  });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -20,12 +25,6 @@ export class MoviesFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location
     ) { 
-    this.form = this.formBuilder.group({
-      name: [null],
-      releaseDate: [null],
-      movieDuration: [null],
-      movieClassification: [null]
-    });
   }
 
   ngOnInit() {

@@ -21,7 +21,7 @@ export class MoviesService {
     );
   }
 
-  save(record: Movie): Observable<Movie> {
+  save(record: Partial<Movie>): Observable<Movie> {
     return this.httpClient.post<Movie>(this.API, record);
   }
 } 
