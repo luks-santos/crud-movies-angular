@@ -28,14 +28,11 @@ export class MoviesFormComponent {
   }
 
   onSubmit() {    
-    
     this.serviceMovie.save(this.form.value).subscribe(
     {
       next: () => this.onSuccess(),
       error: () => this.onError(),
-      complete: () => {
-        this.onCancel()
-      }
+      complete: () => this.onCancel()
     });
   }
 

@@ -25,7 +25,7 @@ export class MoviesComponent {
   ) {
     this.movies$ = this.moviesService.findAll()
     .pipe(
-      catchError(error => {
+      catchError(() => {
         this.onError('Error ao carregar filmes.')
         return of([])
       })
@@ -40,6 +40,13 @@ export class MoviesComponent {
 
   onAdd() {
     // route utiliza a rota atual para acrescentar rota /new
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  onEdit(movie: Movie) {
+    this.moviesService.findById(movie._id).subscribe(m => {
+      console.log(m);
+    });
+    //this.router.navigate([`edit/${movie._id}`], { relativeTo: this.route })
   }
 }

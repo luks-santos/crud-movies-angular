@@ -2,22 +2,22 @@
 
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef> Movie </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        <mat-cell *matCellDef="let movie"> {{movie.name}} </mat-cell>
     </ng-container>
     
     <ng-container matColumnDef="releaseDate">
         <mat-header-cell *matHeaderCellDef> Ano de Lançamento </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.releaseDate}} </mat-cell>
+        <mat-cell *matCellDef="let movie"> {{movie.releaseDate}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="movieDuration">
         <mat-header-cell *matHeaderCellDef> Duração </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.movieDuration}} </mat-cell>
+        <mat-cell *matCellDef="let movie"> {{movie.movieDuration}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="movieClassification">
         <mat-header-cell *matHeaderCellDef> Classificação </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.movieClassification}} </mat-cell>
+        <mat-cell *matCellDef="let movie"> {{movie.movieClassification}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
@@ -28,8 +28,8 @@
             </button>
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let element" class="action-column">
-            <button mat-icon-button color="primary" aria-label="Editar Filme">
+        <mat-cell *matCellDef="let movie" class="action-column">
+            <button mat-icon-button color="primary" aria-label="Editar Filme" (click)="onEdit(movie)">
                 <mat-icon>edit</mat-icon>
             </button>
 

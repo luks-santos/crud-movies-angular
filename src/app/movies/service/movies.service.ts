@@ -14,14 +14,16 @@ export class MoviesService {
   constructor(private httpClient: HttpClient) { }
 
   findAll(): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(this.API)
-    .pipe(
-      first(),
-      tap(movies => console.log(movies))
-    );
+    return this.httpClient.get<Movie[]>(this.API);
+  }
+
+  findById(id: Number): Observable<Movie> {
+    return this.httpClient.get<Movie>(`${this.API}/${id}`);
   }
 
   save(record: Partial<Movie>): Observable<Movie> {
     return this.httpClient.post<Movie>(this.API, record);
   }
+
+
 } 

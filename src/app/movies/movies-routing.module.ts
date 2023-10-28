@@ -6,7 +6,8 @@ import { MoviesComponent } from './containers/movies/movies.component';
 
 const routes: Routes = [
   { path: '', component: MoviesComponent },
-  { path: 'new', component: MoviesFormComponent }
+  { path: 'new', component: MoviesFormComponent },
+  { path: 'edit/:id', component: MoviesFormComponent }
 ];
 
 @NgModule({
