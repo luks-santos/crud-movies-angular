@@ -16,7 +16,6 @@ export class MoviesComponent {
 
   movies$: Observable<Movie[]>;
   
-
   constructor(
     private moviesService: MoviesService, 
     private dialog: MatDialog,
@@ -44,9 +43,11 @@ export class MoviesComponent {
   }
 
   onEdit(movie: Movie) {
-    this.moviesService.findById(movie._id).subscribe(m => {
-      console.log(m);
+    this.moviesService.loadById(movie._id).subscribe(movie => {
+      this.router.navigate([`edit/${movie._id}`], { 
+        relativeTo: this.route,
+      });
     });
-    //this.router.navigate([`edit/${movie._id}`], { relativeTo: this.route })
   }
+  
 }

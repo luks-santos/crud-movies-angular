@@ -11,7 +11,7 @@ export class MoviesListComponent {
   
   @Input() movies: Movie[] = [];
   @Output() add = new EventEmitter();
-  @Output() edit = new EventEmitter();
+  @Output() edit = new EventEmitter<Movie>();
 
   readonly displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions'];
 
@@ -19,7 +19,7 @@ export class MoviesListComponent {
   }
 
   onAdd() {
-    this.add.emit(true);
+    this.add.emit();
   }
 
   onEdit(movie: Movie) {    
