@@ -4,10 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
-import { MoviesFormComponent } from './containers/movies-form/movies-form.component';
-import { MoviesRoutingModule } from './movies-routing.module';
-import { MoviesComponent } from './containers/movies/movies.component';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
+import { MoviesFormComponent } from './containers/movies-form/movies-form.component';
+import { MoviesComponent } from './containers/movies/movies.component';
+import { MoviesRoutingModule } from './movies-routing.module';
 
 @NgModule({
   declarations: [

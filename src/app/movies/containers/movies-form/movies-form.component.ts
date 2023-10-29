@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { delay} from 'rxjs';
 
 import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
