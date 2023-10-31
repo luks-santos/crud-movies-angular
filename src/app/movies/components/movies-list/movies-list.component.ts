@@ -16,8 +16,7 @@ export class MoviesListComponent {
 
   readonly displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions'];
 
-  constructor() {
-  }
+  constructor() {}
 
   onAdd() {
     this.add.emit();

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -20,7 +21,8 @@ export class MoviesComponent {
     private moviesService: MoviesService, 
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {
     this.movies$ = this.moviesService.findAll()
     .pipe(
@@ -50,4 +52,15 @@ export class MoviesComponent {
     });
   }
   
+  onDelete(movie: Movie) {
+    this.moviesService.remove(movie._id).subscribe(
+      () => {
+        this.snackBar.open("Filme deletado com Sucesso", 'X', { 
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+      }
+    );
+  }
 }

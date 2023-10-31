@@ -73,7 +73,7 @@ export class MoviesFormComponent implements OnInit {
   }
 
   private onSuccess() {
-    this.snackBar.open("Curso Salvo com Sucesso", '', { duration: 4000 });
+    this.snackBar.open("Filme Salvo com Sucesso", '', { duration: 4000 });
   }
 
   private onError() {
