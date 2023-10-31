@@ -66,6 +66,7 @@ export class MoviesComponent {
             horizontalPosition: 'center'
           });
         },
+        error: () => this.onError("Erro ao tentar remover curso"),
         complete: () => this.refresh()
     });
   }
