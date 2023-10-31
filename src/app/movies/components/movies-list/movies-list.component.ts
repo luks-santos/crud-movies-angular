@@ -10,8 +10,9 @@ import { Movie } from '../../model/movie';
 export class MoviesListComponent {
   
   @Input() movies: Movie[] = [];
-  @Output() add = new EventEmitter();
+  @Output() add = new EventEmitter<Movie>();
   @Output() edit = new EventEmitter<Movie>();
+  @Output() delete = new EventEmitter<Movie>();
 
   readonly displayedColumns = ['name', 'releaseDate', 'movieDuration', 'movieClassification', 'actions'];
 
@@ -24,5 +25,9 @@ export class MoviesListComponent {
 
   onEdit(movie: Movie) {    
     this.edit.emit(movie);
+  }
+
+  onDelete(movie: Movie) {
+    this.delete.emit(movie);
   }
 }
