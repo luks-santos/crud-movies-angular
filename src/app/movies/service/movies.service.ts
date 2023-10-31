@@ -42,4 +42,8 @@ export class MoviesService {
   private update(record: Partial<Movie>) {
     return this.httpClient.put<Movie>(`${this.API}/${record._id}`, record);
   }
+
+  remove(id: string) {
+    return this.httpClient.delete(`${this.API}/${id}`);
+  }
 } 
