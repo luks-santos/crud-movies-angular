@@ -15,7 +15,7 @@ import { MoviesService } from '../../service/movies.service';
 })
 export class MoviesComponent {
 
-  movies$: Observable<Movie[]>;
+  movies$: Observable<Movie[]> | null = null;
   
   constructor(
     private moviesService: MoviesService, 
@@ -24,13 +24,7 @@ export class MoviesComponent {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {
-    this.movies$ = this.moviesService.findAll()
-    .pipe(
-      catchError(() => {
-        this.onError('Error ao carregar filmes.')
-        return of([])
-      })
-    );
+    this.refresh();
   }
 
   onError(errorMsg: String) {
@@ -52,15 +46,27 @@ export class MoviesComponent {
     });
   }
   
+  private refresh() {
+    this.movies$ = this.moviesService.findAll()
+    .pipe(
+      catchError(() => {
+        this.onError('Error ao carregar filmes.')
+        return of([])
+      })
+    );
+  }
+
   onDelete(movie: Movie) {
     this.moviesService.remove(movie._id).subscribe(
-      () => {
-        this.snackBar.open("Filme deletado com Sucesso", 'X', { 
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center'
-        });
-      }
-    );
+      {
+        next: () => {
+          this.snackBar.open("Filme deletado com Sucesso", 'X', { 
+            duration: 5000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          });
+        },
+        complete: () => this.refresh()
+    });
   }
 }
