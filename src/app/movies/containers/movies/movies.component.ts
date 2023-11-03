@@ -7,11 +7,12 @@ import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/err
 
 import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.scss']
+  styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent {
 
@@ -22,7 +23,7 @@ export class MoviesComponent {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.refresh();
   }
@@ -33,6 +34,11 @@ export class MoviesComponent {
     });
   }
 
+  onConfirm(confirmMsg: String) {
+    return this.dialog.open(ConfirmationDialogComponent, {
+      data: confirmMsg
+    });
+  }
   onAdd() {
     // route utiliza a rota atual para acrescentar rota /new
     this.router.navigate(['new'], { relativeTo: this.route });
@@ -57,17 +63,26 @@ export class MoviesComponent {
   }
 
   onDelete(movie: Movie) {
-    this.moviesService.remove(movie._id).subscribe(
-      {
-        next: () => {
-          this.snackBar.open("Filme deletado com Sucesso", 'X', { 
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center'
-          });
-        },
-        error: () => this.onError("Erro ao tentar remover curso"),
-        complete: () => this.refresh()
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: "Realmente deseja excluir?",
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.moviesService.remove(movie._id).subscribe(
+          {
+            next: () => {
+              this.snackBar.open("Filme deletado com Sucesso", 'X', { 
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center'
+              });
+            },
+            error: () => this.onError("Erro ao tentar remover curso"),
+            complete: () => this.refresh()
+        });
+      }
     });
   }
+
 }

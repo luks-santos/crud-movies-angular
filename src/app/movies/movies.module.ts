@@ -20,7 +20,7 @@ import { MoviesRoutingModule } from './movies-routing.module';
     MoviesRoutingModule,
     AppMaterialModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class MoviesModule { }
