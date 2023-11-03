@@ -64,7 +64,7 @@ export class MoviesComponent {
 
   onDelete(movie: Movie) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: "Realmente deseja excluir?",
+      data: "Tem certeza que deseja remover esse curso?",
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
