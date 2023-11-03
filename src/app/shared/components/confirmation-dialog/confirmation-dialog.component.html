@@ -2,6 +2,6 @@
   <p>{{ data }}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onConfirm(true)">Sim</button>
-  <button mat-button (click)="onConfirm(false)">Não</button>
+  <button mat-flat-button color="primary" (click)="onConfirm(true)">Sim</button>
+  <button mat-flat-button color="warn" (click)="onConfirm(false)">Não</button>
 </div>
