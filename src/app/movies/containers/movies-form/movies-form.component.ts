@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,15 +15,15 @@ import { MoviesService } from '../../service/movies.service';
 export class MoviesFormComponent implements OnInit {
 
   form = this.formBuilder.group({
-    _id: new FormControl('', {nonNullable: true}),
-    name: new FormControl('', {nonNullable: true}),
-    releaseDate: new FormControl(0, {nonNullable: true}),
-    movieDuration: new FormControl('', {nonNullable: true}),
-    movieClassification: new FormControl('', {nonNullable: true})
+    _id: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.minLength(1) ,Validators.maxLength(50)]),
+    releaseDate: new FormControl(1888, [Validators.required, Validators.min(1888)]),
+    movieDuration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
+    movieClassification: new FormControl('', [Validators.required])
   });
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: NonNullableFormBuilder,
     private serviceMovie: MoviesService,
     private snackBar: MatSnackBar,
     private location: Location,
@@ -60,7 +60,8 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {    
-    this.serviceMovie.save(this.form.value).subscribe(
+    const formData = this.form.value as Partial<Movie>;
+    this.serviceMovie.save(formData).subscribe(
     {
       next: () => this.onSuccess(),
       error: () => this.onError(),
@@ -79,4 +80,29 @@ export class MoviesFormComponent implements OnInit {
   private onError() {
     this.snackBar.open("Error ao Salvar Filme", '', { duration: 6000 });
   }
+
+  getErrorMessage(fieldName: string) {
+    const field = this.form.get(fieldName);
+
+    if(field?.hasError('required')) {
+      return 'Campo obrigatório';
+    }
+
+    if(field?.hasError('min')) {
+      return 'O ano mínimo permitido é 1888. Por favor, insira um ano igual ou posterior a 1888.'
+    }
+
+    if(field?.hasError('minlength')) {
+      const requiredLength : number = field.errors ? field.errors['minlength']['requiredLength'] : 7;
+      return `O tamanho mínimo precisa ser de ${requiredLength} caracteres`;
+    }
+
+    if(field?.hasError('maxlength')) {
+      const requiredLength : number = field.errors ? field.errors['maxlength']['requiredLength'] : 50;
+      return `O tamanho máximo precisa ser de ${requiredLength} caracteres`;
+    }
+
+    return 'Campo inválido';
+  }
+
 }

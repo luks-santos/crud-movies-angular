@@ -7,20 +7,25 @@
         <form [formGroup]="form" class="min-width">
             <mat-form-field class="full-width">
                 <mat-label>Nome</mat-label>
-                <input matInput placeholder="Insira o nome" formControlName="name">
+                <input matInput placeholder="Insira o nome" formControlName="name" #name>
+                <mat-hint align="end">{{name.value.length}}/50</mat-hint>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-error *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Ano</mat-label>
-                <input matInput type="number" placeholder="Insira Apenas o ano: 1999, 2001" formControlName="releaseDate">
+                <input matInput type="number" placeholder="Insira apenas o ano: 1999, 2001" formControlName="releaseDate">
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-error *ngIf="form.get('releaseDate')?.invalid">{{ getErrorMessage('releaseDate') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Duração</mat-label>
-                <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="movieDuration">
+                <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="movieDuration" #movieDuration>
+                <mat-hint align="end">{{movieDuration.value.length}}/7</mat-hint>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-error *ngIf="form.get('movieDuration')?.invalid">{{ getErrorMessage('movieDuration') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
@@ -30,6 +35,7 @@
                     <mat-option value="BOM">Bom</mat-option>
                     <mat-option value="EXCELENTE">Excelente</mat-option>
                 </mat-select>
+                <mat-error *ngIf="form.get('movieClassification')?.invalid">{{ getErrorMessage('movieClassification') }}</mat-error>
             </mat-form-field>
         </form>
     </mat-card-content>
