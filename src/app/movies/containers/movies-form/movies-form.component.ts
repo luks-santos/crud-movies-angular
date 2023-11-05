@@ -16,8 +16,8 @@ export class MoviesFormComponent implements OnInit {
 
   form = this.formBuilder.group({
     _id: new FormControl(''),
-    name: new FormControl('', [Validators.required, Validators.minLength(1) ,Validators.maxLength(50)]),
-    releaseDate: new FormControl(1888, [Validators.required, Validators.min(1888)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+    releaseDate: new FormControl(1888, [Validators.required, Validators.min(1888), Validators.max(9999)]),
     movieDuration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
     movieClassification: new FormControl('', [Validators.required])
   });
@@ -90,6 +90,10 @@ export class MoviesFormComponent implements OnInit {
 
     if(field?.hasError('min')) {
       return 'O ano mínimo permitido é 1888. Por favor, insira um ano igual ou posterior a 1888.'
+    }
+
+    if(field?.hasError('max')) {
+      return 'O ano máximo permitido é 9999. Por favor, insira um ano igual ou inferior a 9999.'
     }
 
     if(field?.hasError('minlength')) {
