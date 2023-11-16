@@ -22,20 +22,20 @@
 
             <mat-form-field class="full-width">
                 <mat-label>Duração</mat-label>
-                <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="movieDuration" #movieDuration>
-                <mat-hint align="end">{{movieDuration.value.length}}/7</mat-hint>
+                <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="duration" #duration>
+                <mat-hint align="end">{{duration.value.length}}/7</mat-hint>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-error *ngIf="form.get('movieDuration')?.invalid">{{ getErrorMessage('movieDuration') }}</mat-error>
+                <mat-error *ngIf="form.get('duration')?.invalid">{{ getErrorMessage('duration') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Escolha uma classificação</mat-label>
-                <mat-select  formControlName="movieClassification">
+                <mat-select  formControlName="classification">
                     <mat-option value="RUIM">Ruim</mat-option>
                     <mat-option value="BOM">Bom</mat-option>
                     <mat-option value="EXCELENTE">Excelente</mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('movieClassification')?.invalid">{{ getErrorMessage('movieClassification') }}</mat-error>
+                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification') }}</mat-error>
             </mat-form-field>
         </form>
     </mat-card-content>

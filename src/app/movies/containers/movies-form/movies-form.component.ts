@@ -18,8 +18,8 @@ export class MoviesFormComponent implements OnInit {
     _id: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
     releaseDate: new FormControl(1888, [Validators.required, Validators.min(1888), Validators.max(9999)]),
-    movieDuration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
-    movieClassification: new FormControl('', [Validators.required])
+    duration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
+    classification: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -54,9 +54,11 @@ export class MoviesFormComponent implements OnInit {
       _id: movie._id,
       name: movie.name,
       releaseDate: movie.releaseDate,
-      movieDuration: movie.movieDuration,
-      movieClassification: movie.movieClassification
+      duration: movie.duration,
+      classification: movie.classification,
     });
+    console.log(movie.comments);
+    
   }
 
   onSubmit() {    
