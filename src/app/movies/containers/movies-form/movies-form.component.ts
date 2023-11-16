@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
+import { Comment } from '../../model/comment';
 import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
 
@@ -14,14 +15,15 @@ import { MoviesService } from '../../service/movies.service';
 })
 export class MoviesFormComponent implements OnInit {
 
-  form = this.formBuilder.group({
+  form: FormGroup = this.formBuilder.group({
     _id: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
-    releaseDate: new FormControl(1888, [Validators.required, Validators.min(1888), Validators.max(9999)]),
+    releaseDate: new FormControl(1988, [Validators.required, Validators.min(1888), Validators.max(9999)]),
     duration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
     classification: new FormControl('', [Validators.required]),
+    comments: null
   });
-
+  
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private serviceMovie: MoviesService,
@@ -34,31 +36,39 @@ export class MoviesFormComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
-
+      
       if(id) {
-        this.loadMovieData(id);
+        this.serviceMovie.loadById(id)
+          .subscribe(movie => {  
+            this.form.setValue({
+              _id: movie._id,
+              name: movie.name,    
+              releaseDate: movie.releaseDate,
+              duration: movie.duration,
+              classification: movie.classification,
+              comments: this.formBuilder.array(this.retrieveLessons(movie))
+            });    
+        });
       }
     });
   }
   
-  private loadMovieData(id: string) {
-    this.serviceMovie.loadById(id)
-    .subscribe(movie => {
-      this.populateForm(movie);
-    });
+  private retrieveLessons(movie: Movie) {
+    const comments = [];
+
+    if (movie?.comments) {
+      movie.comments.forEach(comment => comments.push(this.createComment(comment)));
+    } else {
+      comments.push(this.createComment());
+    }
+    return comments;
   }
 
-  private populateForm(movie: Movie) {
-    //this.form.setValue(movie);
-    this.form.setValue({
-      _id: movie._id,
-      name: movie.name,
-      releaseDate: movie.releaseDate,
-      duration: movie.duration,
-      classification: movie.classification,
+  private createComment(comment: Comment = {id: '', review: ''}) {
+    return this.formBuilder.group({
+      id: [comment.id],
+      review: [comment.review]
     });
-    console.log(movie.comments);
-    
   }
 
   onSubmit() {    
