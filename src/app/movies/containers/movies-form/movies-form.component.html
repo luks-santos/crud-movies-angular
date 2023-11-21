@@ -1,4 +1,4 @@
-<mat-card >
+<mat-card *ngIf="ready">
     <mat-card-header>
         <mat-toolbar color="primary">Cadastro de Filmes</mat-toolbar>
     </mat-card-header>
@@ -31,12 +31,29 @@
             <mat-form-field class="full-width">
                 <mat-label>Escolha uma classificação</mat-label>
                 <mat-select  formControlName="classification">
-                    <mat-option value="RUIM">Ruim</mat-option>
-                    <mat-option value="BOM">Bom</mat-option>
-                    <mat-option value="EXCELENTE">Excelente</mat-option>
+                    <mat-option value="Ruim">Ruim</mat-option>
+                    <mat-option value="Bom">Bom</mat-option>
+                    <mat-option value="Excelente">Excelente</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification') }}</mat-error>
             </mat-form-field>
+
+            <mat-toolbar> 
+                <span>Comentários</span>
+                <button mat-icon-button>
+                    <mat-icon aria-label="Adicionar comentário">add</mat-icon>
+                </button>
+            </mat-toolbar>
+
+            <div formArrayName="comments">
+                <div *ngFor="let comment of getCommentsFormArray(); let i = index" [formGroupName]="i">
+                    <mat-form-field class="full-width">
+                        <mat-label>Comentário</mat-label>
+                        <input matInput formControlName="review">
+                    </mat-form-field>
+                </div>
+            </div>
+            
         </form>
     </mat-card-content>
 

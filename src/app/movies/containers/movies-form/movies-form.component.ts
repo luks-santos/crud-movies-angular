@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,14 +15,8 @@ import { MoviesService } from '../../service/movies.service';
 })
 export class MoviesFormComponent implements OnInit {
 
-  form: FormGroup = this.formBuilder.group({
-    _id: new FormControl(''),
-    name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
-    releaseDate: new FormControl(1988, [Validators.required, Validators.min(1888), Validators.max(9999)]),
-    duration: new FormControl('', [Validators.required,  Validators.minLength(5), Validators.maxLength(7)]),
-    classification: new FormControl('', [Validators.required]),
-    comments: null
-  });
+  ready: boolean = false;
+  form!: FormGroup;
   
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -36,21 +30,38 @@ export class MoviesFormComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      
-      if(id) {
-        this.serviceMovie.loadById(id)
-          .subscribe(movie => {  
-            this.form.setValue({
-              _id: movie._id,
-              name: movie.name,    
-              releaseDate: movie.releaseDate,
-              duration: movie.duration,
-              classification: movie.classification,
-              comments: this.formBuilder.array(this.retrieveLessons(movie))
-            });    
-        });
+      if (id) {
+        this.loadMovie(id);
+      } else {
+        this.initializeEmptyForm();
       }
     });
+  }
+  
+  loadMovie(id: string): void {
+    this.serviceMovie.loadById(id).subscribe(movie => {
+      this.form = this.formBuilder.group({
+        _id: movie._id,
+        name: movie.name,
+        releaseDate: movie.releaseDate,
+        duration: movie.duration,
+        classification: movie.classification,
+        comments: this.formBuilder.array(this.retrieveLessons(movie))
+      });
+      this.ready = true;
+    });
+  }
+  
+  initializeEmptyForm(): void {
+    this.form = this.formBuilder.group({
+      _id: new FormControl(''),
+      name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+      releaseDate: new FormControl(1988, [Validators.required, Validators.min(1888), Validators.max(9999)]),
+      duration: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(7)]),
+      classification: new FormControl('', [Validators.required]),
+      comments: null
+    });
+    this.ready = true;
   }
   
   private retrieveLessons(movie: Movie) {
@@ -69,6 +80,12 @@ export class MoviesFormComponent implements OnInit {
       id: [comment.id],
       review: [comment.review]
     });
+  }
+
+  getCommentsFormArray() {
+    console.log((<UntypedFormArray>this.form.get('comments')).controls);
+    
+    return (<UntypedFormArray>this.form.get('comments')).controls;
   }
 
   onSubmit() {    
