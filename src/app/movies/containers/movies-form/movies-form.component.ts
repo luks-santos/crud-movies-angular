@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -63,7 +63,7 @@ export class MoviesFormComponent implements OnInit {
     });
     this.ready = true;
   }
-  
+
   private retrieveLessons(movie: Movie) {
     const comments = [];
 
@@ -88,6 +88,11 @@ export class MoviesFormComponent implements OnInit {
     return (<UntypedFormArray>this.form.get('comments')).controls;
   }
 
+  addNewComment() {
+    const comments = this.form.get('comments') as FormArray;
+    comments.push(this.createComment());
+  }
+  
   onSubmit() {    
     const formData = this.form.value as Partial<Movie>;
     this.serviceMovie.save(formData).subscribe(
