@@ -2,7 +2,7 @@
     <mat-card-header>
         <mat-toolbar color="primary">Cadastro de Filmes</mat-toolbar>
     </mat-card-header>
-    
+
     <mat-card-content>
         <form [formGroup]="form" class="min-width">
             <mat-form-field class="full-width">
@@ -15,7 +15,8 @@
 
             <mat-form-field class="full-width">
                 <mat-label>Ano</mat-label>
-                <input matInput type="number" placeholder="Insira apenas o ano: 1999, 2001" formControlName="releaseDate">
+                <input matInput type="number" placeholder="Insira apenas o ano: 1999, 2001"
+                    formControlName="releaseDate">
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                 <mat-error *ngIf="form.get('releaseDate')?.invalid">{{ getErrorMessage('releaseDate') }}</mat-error>
             </mat-form-field>
@@ -30,15 +31,16 @@
 
             <mat-form-field class="full-width">
                 <mat-label>Escolha uma classificação</mat-label>
-                <mat-select  formControlName="classification">
+                <mat-select formControlName="classification">
                     <mat-option value="Ruim">Ruim</mat-option>
                     <mat-option value="Bom">Bom</mat-option>
                     <mat-option value="Excelente">Excelente</mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification') }}</mat-error>
+                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification')
+                    }}</mat-error>
             </mat-form-field>
 
-            <mat-toolbar> 
+            <mat-toolbar>
                 <span>Comentários</span>
                 <button mat-icon-button color="primary" (click)="addNewComment()">
                     <mat-icon aria-label="Adicionar comentário">add</mat-icon>
@@ -46,14 +48,19 @@
             </mat-toolbar>
 
             <div formArrayName="comments">
-                <div *ngFor="let comment of getCommentsFormArray(); let i = index" [formGroupName]="i">
-                    <mat-form-field class="full-width">
-                        <mat-label>Comentário</mat-label>
-                        <input matInput formControlName="review">
-                    </mat-form-field>
+                <div *ngFor="let comment of getCommentsFormArray(); let i = index">
+                    <div [formGroupName]="i" class="comment-row">
+                        <mat-form-field class="full-width">
+                            <mat-label>Comentário</mat-label>
+                            <input matInput formControlName="review" />
+                        </mat-form-field>
+                        <button mat-icon-button color="warn" aria-label="Remover Comentário" (click)="removeComment(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
-            
+
         </form>
     </mat-card-content>
 
@@ -62,5 +69,3 @@
         <button mat-raised-button (click)="onCancel()">Cancelar</button>
     </mat-card-actions>
 </mat-card>
-
-

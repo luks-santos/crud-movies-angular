@@ -89,10 +89,15 @@ export class MoviesFormComponent implements OnInit {
   }
 
   addNewComment() {
-    const comments = this.form.get('comments') as FormArray;
+    const comments = this.form.get('comments') as UntypedFormArray;
     comments.push(this.createComment());
   }
   
+  removeComment(index: number) {
+    const comments = this.form.get('comments') as UntypedFormArray;
+    comments.removeAt(index);
+  }
+
   onSubmit() {    
     const formData = this.form.value as Partial<Movie>;
     this.serviceMovie.save(formData).subscribe(
