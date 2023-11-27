@@ -36,8 +36,7 @@
                     <mat-option value="Bom">Bom</mat-option>
                     <mat-option value="Excelente">Excelente</mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification')
-                    }}</mat-error>
+                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification')}}</mat-error>
             </mat-form-field>
 
             <mat-toolbar>
@@ -53,6 +52,7 @@
                         <mat-form-field class="full-width">
                             <mat-label>Comentário</mat-label>
                             <input matInput formControlName="review" />
+                            <mat-error *ngIf="getCommentsFormArray()[i].get('review')?.invalid">Campo obrigatório</mat-error>
                         </mat-form-field>
                         <button mat-icon-button color="warn" aria-label="Remover Comentário" (click)="removeComment(i)">
                             <mat-icon>delete</mat-icon>
@@ -61,6 +61,7 @@
                 </div>
             </div>
 
+            <mat-error *ngIf="isFormArrayRequired()">Adicione pelo menos um comentário</mat-error>
         </form>
     </mat-card-content>
 

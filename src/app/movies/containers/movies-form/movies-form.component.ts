@@ -59,12 +59,12 @@ export class MoviesFormComponent implements OnInit {
       releaseDate: new FormControl(1988, [Validators.required, Validators.min(1888), Validators.max(9999)]),
       duration: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(7)]),
       classification: new FormControl('', [Validators.required]),
-      comments: null
+      comments: this.formBuilder.array([])
     });
     this.ready = true;
   }
 
-  private retrieveLessons(movie: Movie) {
+  private retrieveLessons(movie?: Movie) {
     const comments = [];
 
     if (movie?.comments) {
@@ -78,13 +78,11 @@ export class MoviesFormComponent implements OnInit {
   private createComment(comment: Comment = {id: '', review: ''}) {
     return this.formBuilder.group({
       id: [comment.id],
-      review: [comment.review]
+      review: [comment.review, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]]
     });
   }
 
   getCommentsFormArray() {
-    console.log((<UntypedFormArray>this.form.get('comments')).controls);
-    
     return (<UntypedFormArray>this.form.get('comments')).controls;
   }
 
@@ -99,13 +97,18 @@ export class MoviesFormComponent implements OnInit {
   }
 
   onSubmit() {    
-    const formData = this.form.value as Partial<Movie>;
-    this.serviceMovie.save(formData).subscribe(
-    {
-      next: () => this.onSuccess(),
-      error: () => this.onError(),
-      complete: () => this.onCancel()
-    });
+    if (this.form.valid) {
+      const formData = this.form.value as Partial<Movie>;
+      this.serviceMovie.save(formData).subscribe(
+      {
+        next: () => this.onSuccess(),
+        error: () => this.onError(),
+        complete: () => this.onCancel()
+      });
+    } else {
+      alert('Form inválido');
+    }
+   
   }
 
   onCancel() {
@@ -148,4 +151,8 @@ export class MoviesFormComponent implements OnInit {
     return 'Campo inválido';
   }
 
+  isFormArrayRequired() {
+    const comments = this.form.get('comments') as UntypedFormArray;
+    return !comments.valid && comments?.hasError('required') && comments.touched;
+  }
 }
