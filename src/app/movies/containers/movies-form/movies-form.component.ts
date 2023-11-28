@@ -76,7 +76,7 @@ export class MoviesFormComponent implements OnInit {
       releaseDate: new FormControl(1988, [Validators.required, Validators.min(1888), Validators.max(9999)]),
       duration: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(7)]),
       classification: new FormControl('', [Validators.required]),
-      comments: this.formBuilder.array([])
+      comments: this.formBuilder.array([], [Validators.required])
     });
     this.ready = true;
   }
