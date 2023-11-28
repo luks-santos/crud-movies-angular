@@ -10,7 +10,7 @@
                 <input matInput placeholder="Insira o nome" formControlName="name" #name>
                 <mat-hint align="end">{{name.value.length}}/50</mat-hint>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-error *ngIf="form.get('name')?.invalid">{{ getErrorMessage('name') }}</mat-error>
+                <mat-error *ngIf="form.get('name')?.invalid">{{formUtils.getErrorMessage(this.form, 'name') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
@@ -18,7 +18,7 @@
                 <input matInput type="number" placeholder="Insira apenas o ano: 1999, 2001"
                     formControlName="releaseDate">
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-error *ngIf="form.get('releaseDate')?.invalid">{{ getErrorMessage('releaseDate') }}</mat-error>
+                <mat-error *ngIf="form.get('releaseDate')?.invalid">{{ formUtils.getErrorMessage(this.form, 'releaseDate') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
@@ -26,7 +26,7 @@
                 <input matInput placeholder="Insira a Duração no Formato: 2h 19m" formControlName="duration" #duration>
                 <mat-hint align="end">{{duration.value.length}}/7</mat-hint>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-error *ngIf="form.get('duration')?.invalid">{{ getErrorMessage('duration') }}</mat-error>
+                <mat-error *ngIf="form.get('duration')?.invalid">{{ formUtils.getErrorMessage(this.form, 'duration') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
@@ -36,7 +36,7 @@
                     <mat-option value="Bom">Bom</mat-option>
                     <mat-option value="Excelente">Excelente</mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.get('classification')?.invalid">{{ getErrorMessage('classification')}}</mat-error>
+                <mat-error *ngIf="form.get('classification')?.invalid">{{ formUtils.getErrorMessage(this.form, 'classification')}}</mat-error>
             </mat-form-field>
 
             <mat-toolbar>
@@ -52,7 +52,9 @@
                         <mat-form-field class="full-width">
                             <mat-label>Comentário</mat-label>
                             <input matInput formControlName="review" />
-                            <mat-error *ngIf="getCommentsFormArray()[i].get('review')?.invalid">Campo obrigatório</mat-error>
+                            <mat-error *ngIf="getCommentsFormArray()[i].get('review')?.invalid">
+                                {{ formUtils.getFormArrayFieldErrorMessage(this.form, 'comments', 'review', i) }}
+                            </mat-error>
                         </mat-form-field>
                         <button mat-icon-button color="warn" aria-label="Remover Comentário" (click)="removeComment(i)">
                             <mat-icon>delete</mat-icon>
@@ -61,7 +63,7 @@
                 </div>
             </div>
 
-            <mat-error *ngIf="isFormArrayRequired()">Adicione pelo menos um comentário</mat-error>
+            <mat-error *ngIf="formUtils.isFormArrayRequired(this.form, 'comments')">Adicione pelo menos um comentário</mat-error>
         </form>
     </mat-card-content>
 

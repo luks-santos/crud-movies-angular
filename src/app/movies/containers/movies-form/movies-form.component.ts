@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Comment } from '../../model/comment';
 import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
+import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
 
 @Component({
   selector: 'app-movies-form',
@@ -23,7 +24,8 @@ export class MoviesFormComponent implements OnInit {
     private serviceMovie: MoviesService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public formUtils: FormUtilsService
     ) { 
   }
 
@@ -62,9 +64,7 @@ export class MoviesFormComponent implements OnInit {
         duration: movie.duration,
         classification: movie.classification,
         comments: this.formBuilder.array(this.retrieveLessons(movie))
-      });
-      console.log(this.form);
-      
+      });     
       this.ready = true;
     });
   }
@@ -123,7 +123,7 @@ export class MoviesFormComponent implements OnInit {
         complete: () => this.onCancel()
       });
     } else {
-      alert('Form inválido');
+      this.validateAllFormFields(this.form);
     }
    
   }
@@ -138,38 +138,5 @@ export class MoviesFormComponent implements OnInit {
 
   private onError() {
     this.snackBar.open("Error ao Salvar Filme", '', { duration: 6000 });
-  }
-
-  getErrorMessage(fieldName: string) {
-    const field = this.form.get(fieldName);
-
-    if(field?.hasError('required')) {
-      return 'Campo obrigatório';
-    }
-
-    if(field?.hasError('min')) {
-      return 'O ano mínimo permitido é 1888. Por favor, insira um ano igual ou posterior a 1888.'
-    }
-
-    if(field?.hasError('max')) {
-      return 'O ano máximo permitido é 9999. Por favor, insira um ano igual ou inferior a 9999.'
-    }
-
-    if(field?.hasError('minlength')) {
-      const requiredLength : number = field.errors ? field.errors['minlength']['requiredLength'] : 7;
-      return `O tamanho mínimo precisa ser de ${requiredLength} caracteres`;
-    }
-
-    if(field?.hasError('maxlength')) {
-      const requiredLength : number = field.errors ? field.errors['maxlength']['requiredLength'] : 50;
-      return `O tamanho máximo precisa ser de ${requiredLength} caracteres`;
-    }
-
-    return 'Campo inválido';
-  }
-
-  isFormArrayRequired() {
-    const comments = this.form.get('comments') as UntypedFormArray;
-    return !comments.valid && comments?.hasError('required') && comments.touched;
   }
 }
