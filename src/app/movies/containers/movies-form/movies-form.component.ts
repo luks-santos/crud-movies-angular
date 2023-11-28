@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -27,6 +27,21 @@ export class MoviesFormComponent implements OnInit {
     ) { 
   }
 
+  validateAllFormFields(formGroup: UntypedFormGroup | UntypedFormArray) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+
+      if (control instanceof UntypedFormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } 
+      else if (control instanceof UntypedFormGroup || control instanceof UntypedFormArray) {
+        control.markAsTouched({ onlySelf: true });
+        //recursão até encontrar um control
+        this.validateAllFormFields(control);
+      }
+    })
+  }
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -48,6 +63,8 @@ export class MoviesFormComponent implements OnInit {
         classification: movie.classification,
         comments: this.formBuilder.array(this.retrieveLessons(movie))
       });
+      console.log(this.form);
+      
       this.ready = true;
     });
   }
