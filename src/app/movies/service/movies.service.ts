@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Movie } from '../model/movie';
+import { MoviePage } from '../model/movie-page';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MoviesService {
-
   private readonly API = 'api/movies';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  findAll(): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(this.API);
+  findAll(page = 0, pageSize = 10): Observable<MoviePage> {
+    return this.httpClient.get<MoviePage>(this.API, {
+      params: { page, pageSize },
+    });
   }
 
   loadById(id: string): Observable<Movie> {
@@ -23,14 +25,14 @@ export class MoviesService {
 
   save(record: Partial<Movie>): Observable<Movie> {
     console.log(record);
-    
-    if(record._id === "") {
+
+    if (record._id === '') {
       console.log('crete');
-      
+
       return this.create(record);
     } else {
       console.log('update');
-      
+
       return this.update(record);
     }
   }
@@ -46,4 +48,4 @@ export class MoviesService {
   remove(id: string) {
     return this.httpClient.delete(`${this.API}/${id}`);
   }
-} 
+}
