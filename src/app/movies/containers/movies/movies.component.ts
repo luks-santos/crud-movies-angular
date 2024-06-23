@@ -9,12 +9,28 @@ import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { MoviePage } from '../../model/movie-page';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MoviesListComponent } from '../../components/movies-list/movies-list.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-movies',
-  templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.scss'],
+    selector: 'app-movies',
+    templateUrl: './movies.component.html',
+    styleUrls: ['./movies.component.scss'],
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatToolbar,
+        NgIf,
+        MoviesListComponent,
+        MatPaginator,
+        MatProgressSpinner,
+        AsyncPipe,
+    ],
 })
 export class MoviesComponent {
   movies$: Observable<MoviePage> | null = null;

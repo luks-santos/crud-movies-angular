@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,11 +8,21 @@ import { Comment } from '../../model/comment';
 import { Movie } from '../../model/movie';
 import { MoviesService } from '../../service/movies.service';
 import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatCard, MatCardHeader, MatCardContent, MatCardActions } from '@angular/material/card';
 
 @Component({
-  selector: 'app-movies-form',
-  templateUrl: './movies-form.component.html',
-  styleUrls: ['./movies-form.component.scss']
+    selector: 'app-movies-form',
+    templateUrl: './movies-form.component.html',
+    styleUrls: ['./movies-form.component.scss'],
+    standalone: true,
+    imports: [NgIf, MatCard, MatCardHeader, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatIcon, MatSuffix, MatError, MatSelect, MatOption, MatIconButton, NgFor, MatCardActions, MatButton]
 })
 export class MoviesFormComponent implements OnInit {
 
