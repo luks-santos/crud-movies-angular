@@ -1,4 +1,4 @@
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +22,7 @@ import { MatCard, MatCardHeader, MatCardContent, MatCardActions } from '@angular
     templateUrl: './movies-form.component.html',
     styleUrls: ['./movies-form.component.scss'],
     standalone: true,
-    imports: [NgIf, MatCard, MatCardHeader, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatIcon, MatSuffix, MatError, MatSelect, MatOption, MatIconButton, NgFor, MatCardActions, MatButton]
+    imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatIcon, MatSuffix, MatError, MatSelect, MatOption, MatIconButton, MatCardActions, MatButton]
 })
 export class MoviesFormComponent implements OnInit {
 
